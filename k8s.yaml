@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloping3
+spec:
+  selector:
+    matchLabels:
+      app: helloping3
+  template:
+    metadata:
+      labels:
+        app: helloping3
+    spec:
+      containers:
+        - image: okteto.dev/helloping3:latest
+          name: helloping3
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloping3
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - name: helloping3
+      port: 8080
+  selector:
+    app: helloping3
